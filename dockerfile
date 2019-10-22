@@ -6,7 +6,7 @@ RUN apt-get update \
                           unzip 
 
 RUN wget http://archives.nd.edu/whitaker/wordsall.zip \
-    && unzip -x wordsall.zip -d /words
+    && unzip wordsall.zip -d /words
 
 WORKDIR /words
 
