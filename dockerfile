@@ -10,6 +10,7 @@ RUN wget http://archives.nd.edu/whitaker/wordsall.zip \
 
 WORKDIR /words
 
+# these commands are from https://aur.archlinux.org/packages/latin-words/
 RUN gnatmake -O3 words \
     && gnatmake makedict && echo "g" | ./makedict \
     && gnatmake makestem && echo "g" | ./makestem \
