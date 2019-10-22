@@ -11,7 +11,8 @@ RUN wget http://archives.nd.edu/whitaker/wordsall.zip \
 WORKDIR /words
 
 # these commands are from https://aur.archlinux.org/packages/latin-words/
-RUN gnatmake -O3 words \
+RUN sed -i 's/PAUSE_IN_SCREEN_OUTPUT      => TRUE/PAUSE_IN_SCREEN_OUTPUT      => FALSE/g' developer_parameters.adb \
+    && gnatmake -O3 words \
     && gnatmake makedict && echo "g" | ./makedict \
     && gnatmake makestem && echo "g" | ./makestem \
     && gnatmake makeefil && ./makeefil \
