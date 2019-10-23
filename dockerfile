@@ -1,22 +1,18 @@
 FROM debian:buster
 
 RUN apt-get update \
-    && apt-get install -y gnat-8 \
+    && apt-get install -y gprbuild \
+                          gnat \
                           wget \
-                          unzip 
+                          unzip \
+                          make
 
-RUN wget http://archives.nd.edu/whitaker/wordsall.zip \
-    && unzip wordsall.zip -d /words
+RUN wget https://github.com/mk270/whitakers-words/archive/master.zip \
+    && unzip master.zip -d /words
 
-WORKDIR /words
+WORKDIR /words/whitakers-words-master
 
-# these commands are from https://aur.archlinux.org/packages/latin-words/
-RUN sed -i 's/PAUSE_IN_SCREEN_OUTPUT      => TRUE/PAUSE_IN_SCREEN_OUTPUT      => FALSE/g' developer_parameters.adb \
-    && gnatmake -O3 words \
-    && gnatmake makedict && echo "g" | ./makedict \
-    && gnatmake makestem && echo "g" | ./makestem \
-    && gnatmake makeefil && ./makeefil \
-    && gnatmake makeinfl && ./makeinfl
+RUN make 
 
-ENTRYPOINT /words/words
+ENTRYPOINT /words/whitakers-words-master/bin/words
 
